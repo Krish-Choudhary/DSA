@@ -2,7 +2,8 @@
 using namespace std;
 
 // https://www.geeksforgeeks.org/problems/the-celebrity-problem/1
-
+// TC = O(n)
+// SC = O(n)
 int celebrity(vector<vector<int> >& M, int n){
         stack<int> s;
         //step1: push all element in stack
