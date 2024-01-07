@@ -1,5 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
+#define MAX 1000
+
 class Solution{
   public:
     void find_prev(int* arr, int n, vector<int>& prev){
@@ -49,22 +51,22 @@ class Solution{
         
     }
 
-    
-    // int maxArea(int M[MAX][MAX], int n, int m) {
-    //     // Your code here
-    //     int ans = solve(M[0], m);
-    //     for(int i=1; i<n; i++){
-    //         //first update the array
-    //         for(int j=0; j<m; j++){
-    //             if(M[i][j]!=0)
-    //                 M[i][j] = M[i-1][j]+M[i][j];
-    //             else 
-    //                 M[i][j] =0;
-    //         }
+
+    int maxArea(int M[MAX][MAX], int n, int m) {
+        // Your code here
+        int ans = solve(M[0], m);
+        for(int i=1; i<n; i++){
+            //first update the array
+            for(int j=0; j<m; j++){
+                if(M[i][j]!=0)
+                    M[i][j] = M[i-1][j]+M[i][j];
+                else 
+                    M[i][j] =0;
+            }
             
-    //         //calculate answer for this 
-    //         ans = max(ans, solve(M[i], m) );
-    //     }
-    //     return ans;
-    // }
+            //calculate answer for this 
+            ans = max(ans, solve(M[i], m) );
+        }
+        return ans;
+    }
 };
