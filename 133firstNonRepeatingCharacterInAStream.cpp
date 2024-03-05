@@ -7,7 +7,7 @@ class Solution {
 	public:
 		string FirstNonRepeating(string A){
 		    unordered_map<char, int> count;
-		    queue<int> q;
+		    queue<char> q;
 		    string ans;
 		    int n = A.length();
 		    for(int i = 0; i < n; i++){
