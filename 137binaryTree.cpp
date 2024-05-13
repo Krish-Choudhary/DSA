@@ -82,6 +82,14 @@ void reverseLevelOrderTraversal(node *root){
     }
 }
 
+void inorder(node* root){
+    if(root == NULL) return; // base case
+    // LNR
+    inorder(root -> left);
+    cout << root -> data << " ";
+    inorder(root -> right);
+}
+
 int main()
 {
     node *root = NULL;
