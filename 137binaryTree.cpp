@@ -90,6 +90,14 @@ void inorder(node* root){
     inorder(root -> right);
 }
 
+void preorder(node* root){
+    if(root == NULL) return; // base case
+    // NLR
+    cout << root -> data << " ";
+    preorder(root -> left);
+    preorder(root -> right);
+}
+
 int main()
 {
     node *root = NULL;
