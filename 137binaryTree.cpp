@@ -98,6 +98,14 @@ void preorder(node* root){
     preorder(root -> right);
 }
 
+void postorder(node* root){
+    if(root == NULL) return; // base case
+    // LRN
+    postorder(root -> left);
+    postorder(root -> right);
+    cout << root -> data << " ";
+}
+
 int main()
 {
     node *root = NULL;
