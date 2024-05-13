@@ -35,65 +35,47 @@ node *buildTree(node *root)
     return root;
 }
 
-void levelOrderTraversal(node *root)
-{
+void levelOrderTraversal(node *root){
     queue<node *> q;
     q.push(root);
     q.push(NULL);
 
-    while (!q.empty())
-    {
+    while (!q.empty()){
         node *temp = q.front();
         q.pop();
 
-        if (temp == NULL)
-        {
-            // level traversed
+        if (temp == NULL){  // level traversed
             cout << endl;
-            if (!q.empty())
-            {
-                q.push(NULL);
-            }
+            if (!q.empty())  q.push(NULL);
         }
-        else
-        {
+        else{
             cout << temp->data << " ";
-            if (temp->left != NULL)
-                q.push(temp->left);
-            if (temp->right != NULL)
-                q.push(temp->right);
+            if (temp->left != NULL) q.push(temp->left);
+            if (temp->right != NULL)    q.push(temp->right);
         }
     }
 }
 
-void reverseLevelOrderTraversal(node *root)
-{
+void reverseLevelOrderTraversal(node *root){
     stack<node *> s;
     queue<node *> q;
     q.push(root);
     q.push(NULL);
-    while (!q.empty())
-    {
+    while (!q.empty()){
         node *temp = q.front();
         q.pop();
 
-        if (temp == NULL)
-        {
+        if (temp == NULL){
             s.push(NULL);
-            if (!q.empty())
-                q.push(NULL);
+            if (!q.empty()) q.push(NULL);
         }
-        else
-        {
+        else{
             s.push(temp);
-            if (temp->right != NULL)
-                q.push(temp->right);
-            if (temp->left != NULL)
-                q.push(temp->left);
+            if(temp->right != NULL)    q.push(temp->right);
+            if(temp->left != NULL)  q.push(temp->left);
         }
     }
-    while (s.empty() == false)
-    {
+    while (!s.empty()){
         node *temp = s.top();
         temp != NULL ? cout << temp->data << " " : cout << endl;
         s.pop();
