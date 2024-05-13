@@ -83,27 +83,123 @@ void reverseLevelOrderTraversal(node *root){
 }
 
 void inorder(node* root){
-    if(root == NULL) return; // base case
-    // LNR
-    inorder(root -> left);
-    cout << root -> data << " ";
-    inorder(root -> right);
+    // Recursive approach
+    // if(root == NULL) return; // base case
+    // // LNR
+    // inorder(root -> left);
+    // cout << root -> data << " ";
+    // inorder(root -> right);
+
+    // Iterative approach
+    stack<node*> s;
+    node* curr = root;
+ 
+    while (curr != NULL || !s.empty()) {
+        // Reach the left most Node of the curr Node
+        while (curr != NULL) {
+            // Place pointer to a tree node on the stack before traversing the node's left subtree
+            s.push(curr);
+            curr = curr->left;
+        }
+        // Current must be NULL at this point
+        curr = s.top();
+        s.pop();
+        cout << curr->data << " ";
+ 
+        // we have visited the node and its left subtree.  Now, it's right subtree's turn
+        curr = curr->right;
+    }
 }
 
 void preorder(node* root){
-    if(root == NULL) return; // base case
-    // NLR
-    cout << root -> data << " ";
-    preorder(root -> left);
-    preorder(root -> right);
+    // Recursive approach
+    // if(root == NULL) return; // base case
+    // // NLR
+    // cout << root -> data << " ";
+    // preorder(root -> left);
+    // preorder(root -> right);
+
+    // Iterative approach
+    if (root == NULL)   return;
+ 
+    // Create an empty stack and push root to it
+    stack<node*> s;
+    s.push(root);
+ 
+    /* Pop all items one by one. Do following for every popped item
+       a) print it
+       b) push its right child
+       c) push its left child
+    Note that right child is pushed first so that left is processed first */
+    while (!s.empty()) {
+        // Pop the top item from stack and print it
+        node* temp = s.top();
+        cout << temp -> data << " ";
+        s.pop();
+ 
+        // Push right and left children of the popped node to stack
+        if (temp->right != NULL)    s.push(temp->right);
+        if (temp->left != NULL)     s.push(temp->left);
+    }
 }
 
 void postorder(node* root){
-    if(root == NULL) return; // base case
-    // LRN
-    postorder(root -> left);
-    postorder(root -> right);
-    cout << root -> data << " ";
+    // Recursive approach
+    // if(root == NULL) return; // base case
+    // // LRN
+    // postorder(root -> left);
+    // postorder(root -> right);
+    // cout << root -> data << " ";
+
+    // Iterative approach-1 using 2 stacks
+    // if(root == NULL) return;
+    // stack<node*> s1, s2;
+    // s1.push(root);
+    // while(!s1.empty()){
+    //     node* curr = s1.top();
+    //     s1.pop();
+    //     s2.push(curr);
+    //     if(curr -> left != NULL)    s1.push(curr -> left);
+    //     if(curr -> right != NULL)    s1.push(curr -> right);
+    // }
+    // while(!s2.empty()){
+    //     cout << s2.top() << " ";
+    //     s2.pop();
+    // }
+
+    // Iterative approach-2 using 1 stacks
+    if(root == NULL) return;
+    stack<node*> s;
+    s.push(root);
+    node* prev = NULL;
+    while(!s.empty()){
+        node* curr = s.top();
+        if(prev == NULL || prev -> left == curr || prev -> right == curr){
+            if(curr -> left)    s.push(curr->left);
+            else if(curr -> right)  s.push(curr->right);
+            else {
+                s.pop();
+                cout << curr -> data << " ";
+            }
+        }
+        else if (curr->left == prev) {
+            if (curr->right)
+                s.push(curr->right);
+            else {
+                s.pop();
+                cout << curr -> data << " ";
+            }
+
+            /* go up the tree from right node and after
+            coming back from right node process parent and
+            pop stack */
+        }
+        else if (curr->right == prev) {
+            s.pop();
+            cout << curr -> data << " ";
+        }
+        prev = curr;
+    }
 }
 
 int main()
@@ -111,6 +207,6 @@ int main()
     node *root = NULL;
     // creating a tree
     root = buildTree(root);
-    reverseLevelOrderTraversal(root);
+    postorder(root);
     return 0;
 }
