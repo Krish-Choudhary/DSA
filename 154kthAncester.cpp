@@ -58,3 +58,37 @@ int kthAncestor(Node *root, int k, int node)
     else
         return ans->data;
 }
+
+// Alternate approach
+/*
+bool findAncestors(Node* root, int target, vector<int>& ancestors) {
+    if (root == nullptr)
+        return false;
+
+    if (root->data == target)
+        return true;
+
+    if (findAncestors(root->left, target, ancestors) || findAncestors(root->right, target, ancestors)) {
+        ancestors.push_back(root->data);
+        return true;
+    }
+
+    return false;
+}
+int kthAncestor(Node *root, int k, int node)
+{
+    vector<int> ancestors;
+
+    // Find the ancestors of the target node
+    if (!findAncestors(root, node, ancestors))
+        return -1; // Target node not found
+
+    // Check if k is within the range of ancestors
+    int n = ancestors.size();
+    if (k > n)
+        return -1; // kth ancestor does not exist
+
+    // Return the kth ancestor
+    return ancestors[k - 1];
+}
+*/
