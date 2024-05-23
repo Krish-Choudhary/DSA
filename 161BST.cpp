@@ -75,10 +75,56 @@ Node* maxVal(Node* root){
     return temp;
 }
 
+Node* deleteFromBST(Node* root, int val){
+    if(root == NULL)    return root;
+
+    if(root -> data == val){
+        // 0 child
+        if(root -> left == NULL && root -> right == NULL){
+            delete root;
+            return NULL;
+        }
+        
+        // 1 child
+        if(root -> left != NULL && root -> right == NULL){  // left child
+            Node* temp = root -> left;
+            delete root;
+            return temp;
+        }
+        if(root -> left == NULL && root -> right != NULL){  // right child
+            Node* temp = root -> right;
+            delete root;
+            return temp;
+        }
+        
+        // 2 child
+        if(root -> left != NULL && root -> right != NULL){
+            int mini = minVal(root -> right) -> data;
+            // int maxi = maxVal(root -> left) -> data;
+            root -> data = mini;
+            root -> right = deleteFromBST(root -> right, mini);
+            return root;
+        }
+    }
+    else if(root -> data > val){
+        // goto left part
+        root -> left = deleteFromBST(root -> left, val);
+        return root;
+    }
+    else{
+        // goto right part
+        root -> right = deleteFromBST(root -> right, val);
+        return root;
+    }
+}
+
 int main(){
     Node* root = NULL;
     takeInput(root);
     cout << endl << endl;
+    levelOrderTraversal(root);
+    cout << endl << endl;
+    deleteFromBST(root, 60);
     levelOrderTraversal(root);
     return 0;
 }
