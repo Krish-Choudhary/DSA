@@ -57,6 +57,24 @@ void levelOrderTraversal(Node *root){
     }
 }
 
+Node* minVal(Node* root){
+    if(root == NULL || root -> left == NULL)    return root;
+    Node* temp = root;
+    while(temp -> left != NULL){
+        temp = temp -> left;
+    }
+    return temp;
+}
+
+Node* maxVal(Node* root){
+    if(root == NULL || root -> right == NULL)    return root;
+    Node* temp = root;
+    while(temp -> right != NULL){
+        temp = temp -> right;
+    }
+    return temp;
+}
+
 int main(){
     Node* root = NULL;
     takeInput(root);
