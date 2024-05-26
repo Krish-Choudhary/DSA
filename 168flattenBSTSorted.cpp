@@ -49,3 +49,38 @@ TreeNode<int>* flatten(TreeNode<int>* root)
     }
     return inorderArr[0];
 }
+
+
+/*
+void inorder(TreeNode<int> *root, vector<int> &inorderArray)
+{
+    if (root == NULL)    return;
+    
+    inorder(root->left, inorderArray);
+    inorderArray.push_back(root->data);
+    inorder(root->right, inorderArray);
+}
+
+TreeNode<int>* flatten(TreeNode<int>* root)
+{
+
+    if (root == NULL)   return root;
+    
+    vector<int> inorderArray;
+    inorder(root, inorderArray);
+    TreeNode<int> *newRoot = new TreeNode<int>(inorderArray[0]);
+    TreeNode<int> *curr = newRoot;
+
+    for (int i = 1; i < inorderArray.size(); i++)
+    {
+
+        TreeNode<int> *temp = new TreeNode<int>(inorderArray[i]);
+        curr->left = NULL;
+        curr->right = temp;
+        curr = temp;
+    }
+    curr->left = NULL;
+    curr->right = NULL;
+    return newRoot;
+}
+*/
