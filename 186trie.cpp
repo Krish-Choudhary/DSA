@@ -106,6 +106,7 @@ class trie{
             return;
         }
         deletionUtil(child, word.substr(1));
+        if(haveNoChild(root))   delete root;
     }
 
     void deletion(string word){
@@ -119,12 +120,15 @@ int main(){
     trie *t = new trie();
     t -> insertWord("ABCD");
     t -> insertWord("HELLO");
+    t -> insertWord("HI");
+    t -> insertWord("HIP");
     t -> insertWord("HIVE");
     cout << "Is \"AB\" present: " << t -> searchWord("AB") << endl;
     cout << "Is \"ABCD\" present: " << t -> searchWord("ABCD") << endl;
     cout << "Is \"HIVE\" present: " << t -> searchWord("HIVE") << endl;
     t -> deletion("HIVE");
     cout << "Is \"HIVE\" present: " << t -> searchWord("HIVE") << endl;
+    cout << "Is \"HIP\" present: " << t -> searchWord("HIP") << endl;
 
     return 0;
 }
