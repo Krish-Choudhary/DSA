@@ -87,7 +87,6 @@ class trie{
             printSuggestions(curr, temp, prefix);
 
             output.push_back(temp);
-            temp.clear();
             prev = curr;
         }
         return output;
