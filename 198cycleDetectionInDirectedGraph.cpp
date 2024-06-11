@@ -1,3 +1,4 @@
+// https://www.naukri.com/code360/problems/detect-cycle-in-a-directed-graph_1062626
 #include <bits/stdc++.h>
 using namespace std;
 
