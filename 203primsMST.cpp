@@ -54,8 +54,17 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
 // TC = O(N^2)
 
 /*
-vector<pair<pair<int, int>,int>> primsMST(vector<pair<int, int>> *adjList, int n)
+vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>> &g)
 {
+	
+	vector<pair<int, int>> *adjList = new vector<pair<int, int>>[n];
+
+	for (int i = 0; i < m; i++)
+	{
+		adjList[g[i].first.first-1].push_back(make_pair(g[i].first.second-1, g[i].second));
+		adjList[g[i].first.second-1].push_back(make_pair(g[i].first.first-1, g[i].second));
+	}
+
 	// Min priority queue.
 	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
 
@@ -124,19 +133,6 @@ vector<pair<pair<int, int>,int>> primsMST(vector<pair<int, int>> *adjList, int n
 	}
 
 	return result;
-}
-vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>> &g)
-{
-	
-	vector<pair<int, int>> *adjList = new vector<pair<int, int>>[n];
-
-	for (int i = 0; i < m; i++)
-	{
-		adjList[g[i].first.first-1].push_back(make_pair(g[i].first.second-1, g[i].second));
-		adjList[g[i].first.second-1].push_back(make_pair(g[i].first.first-1, g[i].second));
-	}
-
-	return primsMST(adjList, n);
 }
 // TC = O(NlogN)
 */
