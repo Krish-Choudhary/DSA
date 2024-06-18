@@ -1,69 +1,69 @@
 // https://www.naukri.com/code360/problems/prim-s-mst_1095633
 #include <bits/stdc++.h>
 using namespace std;
-vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>> &g){
-    // create adjList
-    unordered_map<int, vector<pair<int, int>>> adjList;
+// vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>> &g){
+//     // create adjList
+//     unordered_map<int, vector<pair<int, int>>> adjList;
+//     for(pair<pair<int, int>, int> edge: g){
+//         int u = edge.first.first;
+//         int v = edge.first.second;
+//         int weight = edge.second;
+//         adjList[u].push_back({v, weight});
+//         adjList[v].push_back({u, weight});
+//     }
+
+//     // nodes are starting from 1
+//     vector<int> key(n + 1, INT_MAX);
+//     vector<bool> mst(n + 1, false);
+//     vector<int> parent(n + 1, -1);
+//     key[1] = 0;
+
+//     for(int i = 1; i <= n; i++){
+//         int mini = INT_MAX;
+//         int u;
+
+//         // find min node
+//         for(int v = 1; v <= n; v++){
+//             if(mst[v] == false && key[v] < mini){
+//                 u = v;
+//                 mini = key[v];
+//             }
+//         }
+
+//         // mark min node true
+//         mst[u] = true;
+
+//         // check its neighbours
+//         for(pair<int, int> neighbour: adjList[u]){
+//             int v = neighbour.first;
+//             int weight = neighbour.second;
+//             if(mst[v] == false && weight < key[v]){
+//                 parent[v] = u;
+//                 key[v] = weight;
+//             }
+//         }
+//     }
+
+//     // create ans
+//     vector<pair<pair<int, int>, int>> result;
+//     for(int i = 2; i <= n; i++){
+//         result.push_back({{parent[i], i}, key[i]});
+//     }
+//     return result;
+// }
+// TC = O(N^2)
+
+vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>> &g)
+{
+	
+	unordered_map<int, vector<pair<int, int>>> adjList;
     for(pair<pair<int, int>, int> edge: g){
-        int u = edge.first.first;
-        int v = edge.first.second;
+        int u = edge.first.first - 1;
+        int v = edge.first.second - 1;
         int weight = edge.second;
         adjList[u].push_back({v, weight});
         adjList[v].push_back({u, weight});
     }
-
-    // nodes are starting from 1
-    vector<int> key(n + 1, INT_MAX);
-    vector<bool> mst(n + 1, false);
-    vector<int> parent(n + 1, -1);
-    key[1] = 0;
-
-    for(int i = 1; i <= n; i++){
-        int mini = INT_MAX;
-        int u;
-
-        // find min node
-        for(int v = 1; v <= n; v++){
-            if(mst[v] == false && key[v] < mini){
-                u = v;
-                mini = key[v];
-            }
-        }
-
-        // mark min node true
-        mst[u] = true;
-
-        // check its neighbours
-        for(pair<int, int> neighbour: adjList[u]){
-            int v = neighbour.first;
-            int weight = neighbour.second;
-            if(mst[v] == false && weight < key[v]){
-                parent[v] = u;
-                key[v] = weight;
-            }
-        }
-    }
-
-    // create ans
-    vector<pair<pair<int, int>, int>> result;
-    for(int i = 2; i <= n; i++){
-        result.push_back({{parent[i], i}, key[i]});
-    }
-    return result;
-}
-// TC = O(N^2)
-
-/*
-vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pair<int, int>, int>> &g)
-{
-	
-	vector<pair<int, int>> *adjList = new vector<pair<int, int>>[n];
-
-	for (int i = 0; i < m; i++)
-	{
-		adjList[g[i].first.first-1].push_back(make_pair(g[i].first.second-1, g[i].second));
-		adjList[g[i].first.second-1].push_back(make_pair(g[i].first.first-1, g[i].second));
-	}
 
 	// Min priority queue.
 	priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
@@ -71,20 +71,9 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
 	// Taking source vertex as 0.
 	int src = 0;
 
-	// Create vector for key and intilize as infinite.
-	int *weight = new int[n];
-
-	// To store parent arr.
-	int *parent = new int[n];
-
-	// To keep track of vertices which allready has been included in mst.
-	bool *inMST = new bool[n];
-	for (int i = 0; i < n; i++)
-	{
-		weight[i] = INT_MAX;
-		parent[i] = -1;
-		inMST[i] = false;
-	}
+	vector<int> weight(n, INT_MAX);
+    vector<bool> inMST(n, false);
+    vector<int> parent(n, -1);
 	// Insert source as in priority queue and initialize with 0.
 	inMST[src] = true;
 
@@ -123,16 +112,12 @@ vector<pair<pair<int, int>, int>> calculatePrimsMST(int n, int m, vector<pair<pa
 		}
 	}
 
-	delete[] adjList;
 
 	vector<pair<pair<int, int>, int>> result;
 
-	for (int i = 1; i < n; i++)
-	{
-		result.push_back({{min(parent[i]+1, i+1),max(parent[i]+1, i+1)}, weight[i]});
-	}
-
+	for(int i = 1; i < n; i++){
+        result.push_back({{parent[i] + 1, i + 1}, weight[i]});
+    }
 	return result;
 }
 // TC = O(NlogN)
-*/
