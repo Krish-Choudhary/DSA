@@ -25,11 +25,34 @@ void unionSet(int u, int v, vector<int> &parent, vector<int> &rank){
     parent[u] = v;
     rank[v]++;
   }
-  
+
+}
+
+bool cmp(vector<int> &a, vector<int> &b){
+  return a[2] < b[2];
 }
 
 int minimumSpanningTree(vector<vector<int>>& edges, int n){
+  // create disjoint set
   vector<int> parent(n);
   vector<int> rank(n);
   makeSet(parent, rank, n);
+
+  // sort edges
+  sort(edges.begin(), edges.end(), cmp);
+
+  int m = edges.size();
+  int minWeight = 0;
+
+  for(int i = 0; i < m; i++){
+    int u = findParent(parent, edges[i][0]);
+    int v = findParent(parent, edges[i][1]);
+
+    if(u != v){
+      unionSet(u, v, parent, rank);
+      minWeight += edges[i][2];
+    }
+  }
+
+  return minWeight;
 }
