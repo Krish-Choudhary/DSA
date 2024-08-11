@@ -88,8 +88,8 @@ int minDistance(string word1, string word2) {
     vector<int> next(l2 + 1, 0);
     for(int j = 0; j < l2; j++) next[j] = l2 - j;
     for(int i = l1 - 1; i >= 0; i--){
+        curr[l2] = l1 - i;      // base case
         for(int j = l2 - 1; j >= 0; j--){
-            curr[l2] = l1 - i;      // base case
             int ans = 0;
             if(word1[i] == word2[j])    ans = next[j + 1];
             else{
